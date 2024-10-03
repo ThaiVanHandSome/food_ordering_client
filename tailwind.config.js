@@ -52,6 +52,10 @@ export default {
           4: 'hsl(var(--chart-4))',
           5: 'hsl(var(--chart-5))'
         }
+      },
+      height: {
+        'header-height': 'var(--header-height)',
+        'remain-screen': 'calc(100vh - var(--header-height))'
       }
     }
   },
