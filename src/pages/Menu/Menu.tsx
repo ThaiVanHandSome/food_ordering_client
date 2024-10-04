@@ -1,6 +1,7 @@
 import { getProducts } from '@/apis/product.api'
 import InputCustom from '@/components/dev/Form/InputCustom'
 import SelectionCustom from '@/components/dev/Form/SelectionCustom'
+import PaginationCustom from '@/components/dev/PaginationCustom'
 import ProductCard from '@/components/dev/ProductCard'
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
@@ -13,7 +14,7 @@ import { FilterSchema } from '@/utils/rules'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, createSearchParams, useNavigate } from 'react-router-dom'
 import * as yup from 'yup'
@@ -150,10 +151,16 @@ export default function Menu() {
             </div>
           </Form>
           <Separator className='my-4' />
-          <div className='grid grid-cols-3 gap-6'>
+          <div className='grid grid-cols-4 gap-4'>
             {products?.data.data.content.map((product) => <ProductCard key={product._id} product={product} />)}
           </div>
         </div>
+        <PaginationCustom
+          path={path.menu}
+          queryConfig={queryConfig}
+          pageSize={products?.data.data.pagination.pageSize as number}
+          totalSize={products?.data.data.pagination.total as number}
+        />
       </div>
     </div>
   )

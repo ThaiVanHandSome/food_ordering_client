@@ -5,8 +5,9 @@ import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { path } from '@/constants/path'
 import { AppContext } from '@/contexts/app.context'
 import clsx from 'clsx'
+import { ChefHat } from 'lucide-react'
 import { useContext, useState } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 
 export default function Header() {
   const { tableNumber, customerName, resetUser } = useContext(AppContext)
@@ -24,23 +25,29 @@ export default function Header() {
   }
 
   return (
-    <header className='fixed top-0 left-0 right-0 h-header-height flex items-center justify-between px-12 shadow-lg border-b bg-background text-foreground'>
+    <header className='fixed top-0 left-0 right-0 z-50 h-header-height flex items-center justify-between px-12 shadow-lg border-b bg-background text-foreground'>
       <div>
         <ul className='flex items-center space-x-4'>
-          {navData.map((navItem) => (
-            <li key={navItem.id}>
-              <NavLink
-                to={navItem.to}
-                className={({ isActive }) =>
-                  clsx('mx-2 text-md font-semibold hover:text-primary transition-colors', {
-                    'text-primary': isActive
-                  })
-                }
-              >
-                {navItem.title}
-              </NavLink>
-            </li>
-          ))}
+          <Link to={path.home}>
+            <ChefHat className='size-9' />
+          </Link>
+          {navData.map(
+            (navItem) =>
+              navItem.canAppear && (
+                <li key={navItem.id}>
+                  <NavLink
+                    to={navItem.to}
+                    className={({ isActive }) =>
+                      clsx('mx-2 text-md font-semibold hover:text-primary transition-colors', {
+                        'text-primary': isActive
+                      })
+                    }
+                  >
+                    {navItem.title}
+                  </NavLink>
+                </li>
+              )
+          )}
           {!!tableNumber && !!customerName && (
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
               <DialogTrigger asChild onClick={() => setIsOpen(true)}>

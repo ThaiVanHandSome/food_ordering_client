@@ -16,6 +16,7 @@ export interface PaginationResponse<T> {
     page: number
     limit: number
     pageSize: number
+    total: number
   }
 }
 

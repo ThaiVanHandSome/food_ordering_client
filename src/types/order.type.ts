@@ -8,9 +8,10 @@ export interface OrderRequest {
   products: { id: string; buy_count: number }[]
 }
 
-type OrderStatusType = 'IN_PROGRESS' | 'COOKING' | 'REJECTED' | 'SERVED' | 'PAID'
+export type OrderStatusType = 'IN_PROGRESS' | 'COOKING' | 'REJECTED' | 'SERVED' | 'PAID'
 
 export interface Order {
+  _id: string
   table_number: number
   customer_name: string
   customer_id: string
@@ -18,4 +19,33 @@ export interface Order {
   product: Product
   buy_count: number
   status: OrderStatusType
+  createdAt: string
+  updatedAt: string
+}
+
+export interface OrderListConfig {
+  page?: number
+  limit?: number
+  tableNumber?: number
+  customerName?: string
+  status?: string
+}
+
+export interface TableStatistic {
+  tableNumber: number
+  cntInprogressOrder: number
+  cntCookingOrder: number
+  cntRejectedOrder: number
+  cntServedOrder: number
+  cntPaidOrder: number
+}
+
+export interface OrderStatistic {
+  tables: TableStatistic[]
+  orders: Order[]
+  cntInprogressOrder: number
+  cntCookingOrder: number
+  cntRejectedOrder: number
+  cntServedOrder: number
+  cntPaidOrder: number
 }

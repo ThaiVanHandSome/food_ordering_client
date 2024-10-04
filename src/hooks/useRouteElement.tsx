@@ -1,7 +1,9 @@
 import { path } from '@/constants/path'
 import { AppContext } from '@/contexts/app.context'
 import MainLayout from '@/layouts/MainLayout'
+import ManageLayout from '@/layouts/ManageLayout'
 import Home from '@/pages/Home'
+import ManageOrder from '@/pages/Manage/ManageOrder/ManageOrder'
 import Menu from '@/pages/Menu'
 import MyOrder from '@/pages/MyOrder'
 import Table from '@/pages/Table'
@@ -9,14 +11,15 @@ import { useContext } from 'react'
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
 
 function ProtectedRoute() {
-  const { isAuthenticated } = useContext(AppContext)
-  return isAuthenticated ? <Outlet /> : <Navigate to={path.home} />
+  // const { isAuthenticated } = useContext(AppContext)
+  // return isAuthenticated ? <Outlet /> : <Navigate to={path.home} />
+  return <Outlet />
 }
 
-function RejectedRoute() {
-  const { isAuthenticated } = useContext(AppContext)
-  return !isAuthenticated ? <Outlet /> : <Navigate to={path.home} />
-}
+// function RejectedRoute() {
+//   const { isAuthenticated } = useContext(AppContext)
+//   return !isAuthenticated ? <Outlet /> : <Navigate to={path.home} />
+// }
 
 export default function useRouteElement() {
   const routeElement = useRoutes([
@@ -55,6 +58,22 @@ export default function useRouteElement() {
           <MyOrder />
         </MainLayout>
       )
+    },
+    {
+      path: '',
+      element: <ProtectedRoute />,
+      children: [
+        {
+          path: path.manage,
+          element: <ManageLayout />,
+          children: [
+            {
+              path: path.manageOrder,
+              element: <ManageOrder />
+            }
+          ]
+        }
+      ]
     }
   ])
   return routeElement
