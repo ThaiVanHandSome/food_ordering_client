@@ -1,7 +1,11 @@
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { orderStatus } from '@/constants/orderStatus'
+import DialogDeleteOrder from '@/pages/Manage/ManageOrder/components/DialogDeleteOrder'
+import DialogUpdateOrder from '@/pages/Manage/ManageOrder/components/DialogUpdateOrder'
+import OrderStatus from '@/pages/Manage/ManageOrder/components/OrderStatus'
 import { Order } from '@/types/order.type'
 import { formatCurrency, formatDateTime } from '@/utils/utils'
+import { EllipsisIcon } from 'lucide-react'
 
 interface Props {
   readonly orders?: Order[]
@@ -46,11 +50,24 @@ export default function OrderTable({ orders }: Props) {
                 </div>
               </div>
             </TableCell>
-            <TableCell>{orderStatus[order.status]}</TableCell>
+            <TableCell>
+              <OrderStatus defaultStatus={order.status} orderId={order._id} />
+            </TableCell>
             <TableCell>{order.assignee}</TableCell>
             <TableCell>
               <p>{formatDateTime(order.createdAt)}</p>
               <p>{formatDateTime(order.updatedAt)}</p>
+            </TableCell>
+            <TableCell>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <EllipsisIcon />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className='flex flex-col gap-2 px-3 py-2'>
+                  <DialogUpdateOrder order={order} />
+                  <DialogDeleteOrder order={order} />
+                </DropdownMenuContent>
+              </DropdownMenu>
             </TableCell>
           </TableRow>
         ))}

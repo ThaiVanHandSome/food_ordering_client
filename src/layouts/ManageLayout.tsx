@@ -1,7 +1,7 @@
 import ManageHeader from '@/components/dev/ManageHeader'
 import { path } from '@/constants/path'
 import clsx from 'clsx'
-import { ListOrderedIcon } from 'lucide-react'
+import { ShoppingCartIcon } from 'lucide-react'
 import { NavLink, Outlet } from 'react-router-dom'
 
 export default function ManageLayout() {
@@ -9,7 +9,7 @@ export default function ManageLayout() {
     <div>
       <ManageHeader />
       <div>
-        <div className='fixed top-[var(--header-height)] left-0 h-[100vh] w-14 border-r flex flex-col items-center pt-2'>
+        <div className='fixed top-0 mt-[var(--header-height)] left-0 h-[100vh] w-14 flex flex-col items-center pt-4'>
           <NavLink
             to={path.manageOrder}
             className={({ isActive }) =>
@@ -19,7 +19,7 @@ export default function ManageLayout() {
               })
             }
           >
-            <ListOrderedIcon />
+            <ShoppingCartIcon />
           </NavLink>
         </div>
         <div className='ml-14 px-4 py-2'>

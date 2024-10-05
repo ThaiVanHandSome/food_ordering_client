@@ -33,7 +33,6 @@
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
-
     --header-height: 4.6rem;
   }
 
@@ -67,7 +66,6 @@
     --ring: 212.7 26.8% 83.9%;
   }
 }
-
 @layer base {
   * {
     @apply border-border;

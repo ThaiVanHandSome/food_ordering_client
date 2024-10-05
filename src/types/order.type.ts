@@ -31,6 +31,13 @@ export interface OrderListConfig {
   status?: string
 }
 
+export interface OrderUpdateRequest {
+  order_id: string
+  product_id?: string
+  buy_count?: string
+  status?: string
+}
+
 export interface TableStatistic {
   tableNumber: number
   cntInprogressOrder: number
@@ -48,4 +55,10 @@ export interface OrderStatistic {
   cntRejectedOrder: number
   cntServedOrder: number
   cntPaidOrder: number
+}
+
+export interface Customer {
+  table_number: number
+  customer_name: string
+  customer_id: string
 }

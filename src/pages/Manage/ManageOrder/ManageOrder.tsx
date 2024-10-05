@@ -1,20 +1,18 @@
-import { getStatistics } from '@/apis/order.api'
+import { getStatistics, getStatisticsTable } from '@/apis/order.api'
 import DatePicker from '@/components/dev/DatePicker'
 import InputCustom from '@/components/dev/Form/InputCustom'
 import SelectionCustom from '@/components/dev/Form/SelectionCustom'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import { Separator } from '@/components/ui/separator'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { orderStatus } from '@/constants/orderStatus'
 import { path } from '@/constants/path'
 import useOrderQueryConfig from '@/hooks/useOrderQueryConfig'
 import CountOfOrderStatus from '@/pages/Manage/ManageOrder/components/CountOfOrderStatus'
+import DialogCreateNewOrder from '@/pages/Manage/ManageOrder/components/DialogCreateNewOrder'
 import OrderTable from '@/pages/Manage/ManageOrder/components/OrderTable'
 import TableInformation from '@/pages/Manage/ManageOrder/components/TableInformation'
-import { Order, OrderStatusType } from '@/types/order.type'
-import { formatCurrency, formatDateTime } from '@/utils/utils'
+import { OrderStatusType } from '@/types/order.type'
 import { useQuery } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -51,6 +49,11 @@ export default function ManageOrder() {
     queryFn: () => getStatistics(orderQueryConfig)
   })
 
+  const { data: statisticsTable } = useQuery({
+    queryKey: ['order-statistics-table'],
+    queryFn: getStatisticsTable
+  })
+
   const navigate = useNavigate()
 
   const onSubmit = form.handleSubmit(
@@ -69,6 +72,15 @@ export default function ManageOrder() {
     )
   )
 
+  const handleReset = () => {
+    navigate(path.manageOrder)
+    form.reset({
+      customer_name: '',
+      table_number: '',
+      status: ''
+    })
+  }
+
   const status = form.watch('status')
   useEffect(() => {
     if (!status) return
@@ -83,15 +95,20 @@ export default function ManageOrder() {
 
   return (
     <div>
-      <div className='mb-8'>
-        <p className='text-lg font-bold mb-1'>Đơn hàng</p>
-        <p className='text-sm italic'>Quản lý đơn hàng</p>
+      <div className='mb-8 flex items-center justify-between'>
+        <div>
+          <p className='text-lg font-bold mb-1'>Đơn hàng</p>
+          <p className='text-sm italic'>Quản lý đơn hàng</p>
+        </div>
+        <div>
+          <DialogCreateNewOrder />
+        </div>
       </div>
       <div className='w-2/3 grid grid-cols-3 gap-4 mb-4'>
         <DatePicker date={startDate} setDate={setStartDate} placeholder='Từ' />
         <DatePicker date={endDate} setDate={setEndDate} placeholder='Đến' />
         <div>
-          <Button>Reset</Button>
+          <Button onClick={handleReset}>Reset</Button>
         </div>
       </div>
       <div>
@@ -112,9 +129,9 @@ export default function ManageOrder() {
         </Form>
       </div>
       <div className='flex items-center gap-4 mb-4'>
-        {ordersStatistics?.data.data.content.tables.map((table) => (
-          <div className='w-[10%]'>
-            <TableInformation key={table.tableNumber} tableStatistic={table} />
+        {statisticsTable?.data.data.map((table) => (
+          <div key={table.tableNumber} className='w-[10%]'>
+            <TableInformation tableStatistic={table} />
           </div>
         ))}
       </div>
