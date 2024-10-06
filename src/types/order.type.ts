@@ -1,7 +1,7 @@
 import { Product } from '@/types/product.type'
 
 export interface OrderRequest {
-  table_number: number
+  table_number: number | string
   customer_name: string
   customer_id: string
   assignee?: string

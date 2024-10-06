@@ -17,6 +17,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { createSearchParams, useNavigate } from 'react-router-dom'
+import PaginationCustom from '@/components/dev/PaginationCustom'
 
 export default function ManageOrder() {
   const orderQueryConfig = useOrderQueryConfig()
@@ -140,6 +141,12 @@ export default function ManageOrder() {
       <div>
         <OrderTable orders={ordersStatistics?.data.data.content.orders} />
       </div>
+      <PaginationCustom
+        pageSize={ordersStatistics?.data.data.pagination.pageSize as number}
+        path={path.manageOrder}
+        queryConfig={orderQueryConfig}
+        totalSize={ordersStatistics?.data.data.pagination.total as number}
+      />
     </div>
   )
 }

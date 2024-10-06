@@ -55,3 +55,10 @@ export const FilterSchema = yup.object({
 export const LoginToOrderSchema = yup.object({
   name: yup.string().required('Bạn phải nhập tên')
 })
+
+export const AddTableSchema = yup.object({
+  tableNumber: yup.string().required('Bạn phải nhập bàn'),
+  capacity: yup.string().required('Bạn phải nhập sức chứa'),
+  token: yup.string().required('Bạn phải nhập token'),
+  status: yup.string()
+})

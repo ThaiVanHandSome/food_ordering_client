@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosError, HttpStatusCode } from 'axios'
+import { toDataURL, QRCodeToDataURLOptions } from 'qrcode'
+import { nanoid } from 'nanoid'
 
 export function isAxiosError<T>(error: unknown): error is AxiosError<T> {
   return axios.isAxiosError(error)
@@ -67,4 +69,33 @@ export function generateShortUUID(length = 5) {
   }
 
   return result
+}
+
+const options: QRCodeToDataURLOptions = {
+  width: 400,
+  margin: 2
+}
+
+export const getQRCode = (value: string) => {
+  let qrValue: string | undefined = undefined
+
+  toDataURL(value, options, (err, url) => {
+    if (err) {
+      console.error(err)
+      return
+    }
+    qrValue = url
+  })
+
+  return qrValue
+}
+
+export const generateQRCode = (url: string) => {
+  const qrValue = getQRCode(url)
+  return qrValue
+}
+
+export const generateTableToken = (length: number = 30) => {
+  const uuid = nanoid(length)
+  return uuid
 }

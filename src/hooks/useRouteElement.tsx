@@ -4,6 +4,7 @@ import MainLayout from '@/layouts/MainLayout'
 import ManageLayout from '@/layouts/ManageLayout'
 import Home from '@/pages/Home'
 import ManageOrder from '@/pages/Manage/ManageOrder/ManageOrder'
+import ManageTable from '@/pages/Manage/ManageTable'
 import Menu from '@/pages/Menu'
 import MyOrder from '@/pages/MyOrder'
 import Table from '@/pages/Table'
@@ -70,6 +71,10 @@ export default function useRouteElement() {
             {
               path: path.manageOrder,
               element: <ManageOrder />
+            },
+            {
+              path: path.manageTable,
+              element: <ManageTable />
             }
           ]
         }

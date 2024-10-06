@@ -1,35 +1,34 @@
-import { deleteOrder } from '@/apis/order.api'
+import { deleteTable } from '@/apis/table.api'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
-import useOrderQueryConfig from '@/hooks/useOrderQueryConfig'
-import { Order } from '@/types/order.type'
+import { toast } from '@/hooks/use-toast'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 
 interface Props {
-  readonly order: Order
+  readonly table_id: string
 }
 
-export default function DialogDeleteOrder({ order }: Props) {
+export default function DialogDeleteTable({ table_id }: Props) {
   const queryClient = useQueryClient()
-  const orderQueryConfig = useOrderQueryConfig()
   const [open, setOpen] = useState<boolean>(false)
 
-  const deleteOrderMutation = useMutation({
-    mutationFn: () => deleteOrder(order._id),
-    onSuccess: () => {
-      setOpen(false)
-      queryClient.invalidateQueries({
-        queryKey: ['order-statistics', orderQueryConfig]
-      })
-      queryClient.invalidateQueries({
-        queryKey: ['order-statistics-table']
-      })
-    }
+  const deleteTableMutation = useMutation({
+    mutationFn: (id: string) => deleteTable(id)
   })
 
   const handleDelete = () => {
-    deleteOrderMutation.mutate()
+    deleteTableMutation.mutate(table_id, {
+      onSuccess: (res) => {
+        toast({
+          description: res.data.message
+        })
+        queryClient.invalidateQueries({
+          queryKey: ['tables']
+        })
+        setOpen(false)
+      }
+    })
   }
 
   return (
@@ -40,7 +39,7 @@ export default function DialogDeleteOrder({ order }: Props) {
         </Button>
       </DialogTrigger>
       <DialogContent>
-        <p>Bạn có chắc chắn muốn xóa đơn hàng?</p>
+        <p>Bạn có chắc chắn muốn xóa bàn ăn này?</p>
         <div>
           <Button variant='destructive' className='mr-4' onClick={handleDelete}>
             Xóa
