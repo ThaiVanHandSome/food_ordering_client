@@ -1,9 +1,11 @@
 import { ProductOrder } from '@/types/product.type'
+import { User } from '@/types/user.type'
 import {
   getAccessTokenFromLocalStorage,
   getCustomerIdFromLocalStorage,
   getCustomerNameFromLocalStorage,
-  getTableNumberFromLocalStorage
+  getTableNumberFromLocalStorage,
+  getUserFromLocalStorage
 } from '@/utils/auth'
 import { createContext, useState } from 'react'
 
@@ -18,7 +20,9 @@ interface AppContextInterface {
   tableNumber: string
   setTableNumber: React.Dispatch<React.SetStateAction<string>>
   customerId: string
-  setCustomerId: React.Dispatch<React.SetStateAction<string>>,
+  setCustomerId: React.Dispatch<React.SetStateAction<string>>
+  user: User | null
+  setUser: React.Dispatch<React.SetStateAction<User | null>>
   resetUser: () => void
 }
 
@@ -34,7 +38,9 @@ const initialAppContext: AppContextInterface = {
   setTableNumber: () => null,
   customerId: getCustomerIdFromLocalStorage(),
   setCustomerId: () => null,
-  resetUser: () => null,
+  user: getUserFromLocalStorage(),
+  setUser: () => null,
+  resetUser: () => null
 }
 
 export const AppContext = createContext<AppContextInterface>(initialAppContext)
@@ -45,9 +51,11 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [customerName, setCustomerName] = useState<string>(initialAppContext.customerName)
   const [tableNumber, setTableNumber] = useState<string>(initialAppContext.tableNumber)
   const [customerId, setCustomerId] = useState<string>(initialAppContext.customerId)
+  const [user, setUser] = useState<User | null>(initialAppContext.user)
 
   const reset = () => {
     setIsAuthenticated(false)
+    setUser(null)
   }
 
   const resetUser = () => {
@@ -73,6 +81,8 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         customerId,
         setCustomerId,
         reset,
+        user,
+        setUser,
         resetUser
       }}
     >

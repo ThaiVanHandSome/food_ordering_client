@@ -16,3 +16,12 @@ export interface ProductOrder {
   product: Product
   buy_count: number
 }
+
+export interface ProductRequest {
+  name: string
+  description: string
+  image: File
+  status: string
+  category: string
+  price: number
+}

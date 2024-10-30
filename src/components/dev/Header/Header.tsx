@@ -25,7 +25,7 @@ export default function Header() {
   }
 
   return (
-    <header className='fixed top-0 left-0 right-0 z-50 h-header-height flex items-center justify-between px-12 shadow-lg border-b bg-background text-foreground'>
+    <header className='fixed top-0 left-0 right-0 z-50 h-header-height flex items-center justify-between px-12 shadow-lg bg-background text-foreground'>
       <div>
         <ul className='flex items-center space-x-4'>
           <Link to={path.home}>

@@ -2,6 +2,7 @@ import { deleteTable } from '@/apis/table.api'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { toast } from '@/hooks/use-toast'
+import { TrashIcon } from '@radix-ui/react-icons'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 
@@ -34,9 +35,7 @@ export default function DialogDeleteTable({ table_id }: Props) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <Button variant='destructive' className='w-full'>
-          Xóa
-        </Button>
+        <TrashIcon className='size-4 text-destructive' />
       </DialogTrigger>
       <DialogContent>
         <p>Bạn có chắc chắn muốn xóa bàn ăn này?</p>

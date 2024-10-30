@@ -1,3 +1,5 @@
+import { User } from '@/types/user.type'
+
 export interface SuccessResponse<T> {
   status: string
   message: string
@@ -23,4 +25,10 @@ export interface PaginationResponse<T> {
 export interface FormControlItem {
   value: string
   label: string | React.ReactNode
+}
+
+export interface AuthResponse {
+  accessToken: string
+  refreshToken: string
+  user: User
 }

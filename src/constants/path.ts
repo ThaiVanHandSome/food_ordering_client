@@ -3,6 +3,7 @@ export const path = {
   menu: '/menu',
   table: '/table/:tableNumber',
   myOrder: '/my-order',
+  login: '/login',
   manage: '/manage',
   manageOrder: '/manage/orders',
   manageTable: '/manage/tables',

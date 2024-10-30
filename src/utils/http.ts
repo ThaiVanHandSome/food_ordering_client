@@ -18,9 +18,22 @@ class HTTP {
     this.refresh_token = getRefreshTokenFromLocalStorage()
     this.refreshTokenRequest = null
 
+    this.instance.interceptors.request.use(
+      (config) => {
+        if (this.access_token && config.headers) {
+          config.headers.Authorization = 'Bearer ' + this.access_token
+        }
+        return config
+      },
+      (error: AxiosError) => {
+        return Promise.reject(error)
+      }
+    )
+
     this.instance.interceptors.response.use(
       (response) => response,
       (error: AxiosError) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const data: any = error.response?.data
         toast({
           variant: 'destructive',

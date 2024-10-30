@@ -1,3 +1,5 @@
+import { User } from '@/types/user.type'
+
 export const AuthenticationTarget = new EventTarget()
 
 export const clearLS = () => {
@@ -45,4 +47,12 @@ export const setCustomerIdToLocalStorage = (customerId: string) => {
 
 export const getCustomerIdFromLocalStorage = (): string => {
   return localStorage.getItem('fd_customerId') ?? ''
+}
+
+export const setUserToLocalStorage = (user: User) => {
+  localStorage.setItem('fd_user', JSON.stringify(user))
+}
+
+export const getUserFromLocalStorage = () => {
+  return localStorage.getItem('fd_user') ? JSON.parse(localStorage.getItem('fd_user') as string) : {}
 }

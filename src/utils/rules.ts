@@ -62,3 +62,23 @@ export const AddTableSchema = yup.object({
   token: yup.string().required('Bạn phải nhập token'),
   status: yup.string()
 })
+
+export const ProductSchema = yup.object({
+  name: yup.string().required('Bạn phải nhập tên'),
+  categoryId: yup.string().required('Bạn phải chọn danh mục'),
+  description: yup.string().required('Bạn phải nhập mô tả'),
+  price: yup.string().required('Bạn phải nhập giá'),
+  status: yup.string().required('Bạn phải chọn trạng thái')
+})
+
+export const UserSchema = yup.object({
+  name: yup.string().required('Bạn phải nhập tên'),
+  email: yup.string().required('Bạn phải nhập email').email(),
+  role: yup.string().required('Bạn phải chọn role'),
+  password: yup.string().required('Bạn phải nhập mật khẩu')
+})
+
+export const LoginSchema = yup.object({
+  email: yup.string().required('Bạn phải nhập email').email(),
+  password: yup.string().required('Bạn phải nhập mật khẩu')
+})

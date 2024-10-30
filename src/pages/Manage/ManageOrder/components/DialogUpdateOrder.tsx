@@ -7,6 +7,7 @@ import DialogChooseProduct from '@/pages/Manage/ManageOrder/components/DialogCho
 import { Order, OrderUpdateRequest } from '@/types/order.type'
 import { Product } from '@/types/product.type'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { EditIcon } from 'lucide-react'
 import { useState } from 'react'
 
 interface Props {
@@ -43,7 +44,7 @@ export default function DialogUpdateOrder({ order }: Props) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <Button className='w-full'>Chỉnh sửa</Button>
+        <EditIcon className='size-4' />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>Cập nhật đơn hàng</DialogHeader>

@@ -11,7 +11,7 @@ import { generateQRCode, generateTableToken } from '@/utils/utils'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { PlusIcon } from '@radix-ui/react-icons'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { RefreshCcwIcon } from 'lucide-react'
+import { EditIcon, RefreshCcwIcon } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
@@ -117,16 +117,14 @@ export default function DialogTable({ table }: Props) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <Button className='w-full max-w-full'>
-          {isUpdate ? (
-            'Chỉnh sửa'
-          ) : (
-            <>
-              <PlusIcon />
-              <span>Thêm bàn ăn</span>
-            </>
-          )}
-        </Button>
+        {isUpdate ? (
+          <EditIcon className='size-4' />
+        ) : (
+          <Button className='w-full max-w-full'>
+            <PlusIcon />
+            <span>Thêm bàn ăn</span>
+          </Button>
+        )}
       </DialogTrigger>
       {isFormReset.current && (
         <DialogContent className='max-h-[90vh] overflow-y-auto'>
